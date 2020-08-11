@@ -1,14 +1,14 @@
 from odoo import http
-from odoo.addons.library_app.controllers.main import Book
+from odoo.addons.library_app.controllers.main import Books
 
-class BooksExtended(Book):
+
+class BooksExtended(Books):
 
     @http.route()
     def list(self, **kwargs):
         response = super().list(**kwargs)
-        if kwargs.get('avaliable'):
+        if kwargs.get('available'):
             Book = http.request.env['library.book']
             books = Book.search([('is_available', '=', True)])
             response.qcontext['books'] = books
-
         return response
